@@ -29,6 +29,35 @@
     dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
   }
 
+  // smooth anchor scroll with ease-in-out cubic (slow + soft accel/decel)
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function easeInOutCubic(t){return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2;}
+  function smoothScrollTo(targetY, duration){
+    const startY = window.scrollY || window.pageYOffset;
+    const distance = targetY - startY;
+    if (Math.abs(distance) < 2) return;
+    const startTime = performance.now();
+    function step(now){
+      const t = Math.min((now - startTime) / duration, 1);
+      window.scrollTo(0, startY + distance * easeInOutCubic(t));
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  document.querySelectorAll('a[href^="#"], button[data-href^="#"]').forEach(el => {
+    el.addEventListener('click', e => {
+      const href = el.getAttribute('href') || el.getAttribute('data-href');
+      if (!href || href === '#') return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      if (prefersReduced) { target.scrollIntoView(); return; }
+      const headerH = (document.querySelector('header.site')?.offsetHeight) || 80;
+      const top = target.getBoundingClientRect().top + window.scrollY - (headerH + 16);
+      smoothScrollTo(top, 1200);
+    });
+  });
+
   // fade-in via IntersectionObserver, with fallback
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
