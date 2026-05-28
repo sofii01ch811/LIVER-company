@@ -10,16 +10,24 @@ The subject is **Cloud Liver** (クラウドライバー), a Japanese live-strea
 
 ## File layout
 
-- `project/index.html` — the primary LP (~1.6k lines, single file). This is what the user had open at handoff and is almost always the file to work on.
-- `project/company.html` — the 会社概要 (company info) subpage. Cross-linked from `index.html` via `<a href="company.html">` and back via `index.html#<section-id>` anchors.
-- `project/assets/` — referenced images (decorations `deco_*.png`, page-2/3 frames `p2_*.png`/`p3_*.png`, `gamepad_3d.png`, `streamer_photo.jpg`, `logo_light.png`, etc.).
-- `project/uploads/` — user-supplied reference images. Not necessarily used by the HTML; treat as inspiration/source material, not as imports to preserve.
+**`docs/` is the canonical, in-development site.** All edits should go here. `project/` is frozen at the initial design handoff state and is kept for reference only — do not modify it unless the user explicitly asks.
 
-Both HTML files are **fully self-contained**: all CSS lives in a single `<style>` block in `<head>`, all JS in one `<script>` at end of `<body>`. There is no build step, no package.json, no node_modules, no tests, no linter config.
+`docs/` (canonical, GitHub Pages-served):
+- `docs/index.html` — the primary LP. Loads external CSS/JS (no inline `<style>` / `<script>` blocks of substance).
+- `docs/company.html` — 会社概要 subpage. Same external CSS/JS pattern.
+- `docs/css/style.css` — site-wide stylesheet (the original `<style>` block extracted out + many later refinements: intro splash, intensified neon `.bg-shapes`, floating translucent panels, scale-down typography, etc.).
+- `docs/js/main.js` — header shrink + FAQ open/close + smooth-scroll + scroll fade-in observer.
+- `docs/assets/` — images (decorations `deco_*.png`, `gamepad_3d.png`, `streamer_photo.jpg`, `faq_question_3d.png`, etc.).
+
+`project/` (frozen initial handoff, kept for reference):
+- `project/index.html` / `project/company.html` — single-file mocks with inline `<style>`/`<script>` exported from Claude Design. Does NOT include the post-handoff polish (intro splash, intensified neon shapes, panels, etc.) — that all lives in `docs/`. Anchor IDs and page anatomy below still match.
+- `project/assets/`, `project/uploads/` — accompanying images.
+
+There is no build step, no package.json, no node_modules, no tests, no linter config.
 
 ## Previewing
 
-There are no build/lint/test commands. To preview, open the HTML file directly in a browser (`file://`) or serve the `project/` directory statically, e.g. `python3 -m http.server --directory project 8000`. Per `README.md`, do **not** open in a browser or take screenshots unless the user asks — the source spells out dimensions/colors/layout.
+There are no build/lint/test commands. To preview, serve `docs/` statically: `python3 -m http.server --directory docs 8000`, then open `http://localhost:8000/index.html` (or `/company.html`). Per `README.md`, do **not** open in a browser or take screenshots unless the user asks — the source spells out dimensions/colors/layout.
 
 ## Design system (defined in `index.html` `:root`)
 
@@ -47,21 +55,37 @@ The same tokens appear in both HTML files and any reimplementation should preser
 
 `company.html` sections: PAGE HERO → 代表メッセージ → VMV → COMPANY INFO → HISTORY → ACCESS → CTA → footer.
 
-## Behavior (the inline `<script>`)
+## Behavior
 
-Three things only, all in `index.html`'s trailing IIFE:
+In `docs/`, behavior lives in `docs/js/main.js` (not inline). It handles:
 
 1. **Sticky header shrink**: toggles `header.site.scrolled` when `window.scrollY > 12`.
-2. **Voices carousel**: `#voicesTrack` is translated horizontally; `#voicesPrev`/`#voicesNext` and `#voicesDots > i` are the controls. Wraps modulo `track.children.length`.
-3. **Scroll-triggered fade-in**: elements with class `.fade-in` (and stagger variants `.delay-1`…`.delay-5`, `.from-right`, `.scale-in`) get `.visible` added via `IntersectionObserver`. Fallback: if `IntersectionObserver` is missing, all become visible immediately.
+2. **FAQ open/close** with smooth animation.
+3. **Smooth-scroll** for anchor links.
+4. **Scroll-triggered fade-in**: elements with class `.fade-in` (and stagger variants `.delay-1`…`.delay-5`, `.from-right`, `.scale-in`) get `.visible` added via `IntersectionObserver`. Fallback: if `IntersectionObserver` is missing, all become visible immediately.
 
-`company.html` has its own much smaller script — just the header-shrink logic.
+Note: `docs/index.html` includes a once-per-load **intro splash** overlay (`.intro-splash`) — a 5.6s gradient fade introducing the brand line. The `<h2 class="intro-text">` here mirrors the HERO `<h1>` copy, so keep them in sync.
 
-Respect `@media (prefers-reduced-motion: reduce)` — the background orbs disable their drift animations under it.
+`company.html` reuses the same `main.js`.
+
+Respect `@media (prefers-reduced-motion: reduce)` — the background orbs/shapes disable their drift animations under it.
 
 ## When editing
 
-- Keep changes inside the relevant single HTML file; do not split into external CSS/JS unless the user asks. The bundle's value is that each page is one self-contained artifact.
+- Edit `docs/` (HTML, `docs/css/style.css`, `docs/js/main.js`). Do not touch `project/` unless explicitly asked.
 - Anchor IDs (`#service`, `#support`, `#results`, `#flow`, `#faq`, `#cta`) are referenced from both pages' nav menus — renaming one means updating both files.
-- Image paths are relative (`assets/...`, `uploads/...`) and resolve from `project/`. New images go in `project/assets/`.
+- Image paths are relative (`assets/...`) and resolve from `docs/`. New images go in `docs/assets/`.
 - All decorative `<img>`s use `alt=""` intentionally (presentational). Preserve that pattern for new decorations.
+- The HERO `<h1 class="h1">` and the intro splash `<h2 class="intro-text">` share the same copy — when changing one, change the other (and the `<title>`).
+
+## Gitワークフロー
+- 修正タスクが完了したら必ず以下を実行する:
+  1. `git status` で変更内容をユーザに見せる
+  2. ユーザの確認後、`git add . && git commit -m "..."` でコミット
+  3. コミット後、`git push` でGitHubに反映
+- コミットメッセージは日本語で具体的に
+- 1タスク1コミット
+
+
+
+
