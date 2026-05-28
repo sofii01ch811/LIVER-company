@@ -27,9 +27,99 @@
 
 /* ---------- base ---------- */
 *{box-sizing:border-box}
-html{background:var(--bg)}
+html{background:var(--bg);overflow-x:hidden}
 html,body{margin:0;padding:0;color:var(--ink);font-family:"Noto Sans JP",system-ui,sans-serif;-webkit-font-smoothing:antialiased;position:relative}
-body{min-width:1280px;overflow-x:hidden;padding-top:108px;background:transparent}
+body{overflow-x:hidden;padding-top:108px;background:transparent;max-width:100vw}
+body.nav-locked{overflow:hidden}
+@media (min-width:1200px){body{min-width:1280px}}
+
+/* ---------- Hamburger toggle (hidden on desktop, shown on tablet/mobile) ---------- */
+.nav-toggle{
+  display:none;position:relative;width:44px;height:44px;
+  flex:none;cursor:pointer;background:transparent;border:0;padding:0;
+  z-index:201;color:inherit;
+}
+.nav-toggle .bar{
+  position:absolute;left:10px;right:10px;height:2px;
+  background:var(--ink);border-radius:2px;
+  transition:transform .3s ease, opacity .3s ease, top .3s ease;
+}
+.nav-toggle .bar:nth-child(1){top:14px}
+.nav-toggle .bar:nth-child(2){top:21px}
+.nav-toggle .bar:nth-child(3){top:28px}
+.nav-toggle[aria-expanded="true"] .bar{background:#fff}
+.nav-toggle[aria-expanded="true"] .bar:nth-child(1){top:21px;transform:rotate(45deg)}
+.nav-toggle[aria-expanded="true"] .bar:nth-child(2){opacity:0}
+.nav-toggle[aria-expanded="true"] .bar:nth-child(3){top:21px;transform:rotate(-45deg)}
+
+/* ---------- Drawer (slides in from right) ---------- */
+.nav-drawer{
+  position:fixed;inset:0;z-index:300;
+  visibility:hidden;opacity:0;
+  transition:opacity .3s ease, visibility 0s .3s;
+}
+.nav-drawer.is-open{visibility:visible;opacity:1;transition:opacity .3s ease}
+.nav-drawer-backdrop{
+  position:absolute;inset:0;
+  background:rgba(15,8,30,.5);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+.nav-drawer-panel{
+  position:absolute;top:0;right:0;bottom:0;
+  width:min(86%, 360px);
+  padding:78px 26px 30px;
+  display:flex;flex-direction:column;gap:24px;
+  color:#fff;
+  background:
+    radial-gradient(ellipse 600px 400px at 70% 10%, rgba(91,139,255,.22), transparent 60%),
+    radial-gradient(ellipse 500px 360px at 10% 85%, rgba(236,72,153,.18), transparent 60%),
+    linear-gradient(180deg, #1b1638 0%, #0c0a1e 100%);
+  transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1);
+  box-shadow:-20px 0 60px -20px rgba(0,0,0,.55);
+}
+.nav-drawer.is-open .nav-drawer-panel{transform:translateX(0)}
+.nav-drawer-close{
+  position:absolute;top:18px;right:18px;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+  color:#fff;font-size:22px;line-height:1;cursor:pointer;
+  display:grid;place-items:center;
+  transition:background .2s, transform .3s;
+}
+.nav-drawer-close:hover{background:rgba(255,255,255,.16);transform:rotate(90deg)}
+.nav-drawer-brand{
+  font-family:"Orbitron",sans-serif;font-weight:800;font-size:13px;letter-spacing:.4em;
+  background:linear-gradient(90deg,#5a8bff,#9b5cf6 55%,#ec4899);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-transform:uppercase;margin-bottom:4px;
+}
+.nav-drawer-nav{display:flex;flex-direction:column;gap:0}
+.nav-drawer-nav a{
+  display:block;padding:15px 4px;
+  font-size:17px;font-weight:600;color:rgba(255,255,255,.92);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  transition:color .2s, padding-left .2s;
+}
+.nav-drawer-nav a:hover,.nav-drawer-nav a:focus-visible{color:#00e5ff;padding-left:8px;outline:0}
+.nav-drawer-nav a.current{
+  color:#fff;font-weight:800;
+  background:linear-gradient(90deg, rgba(155,92,246,.18), transparent);
+  padding-left:12px;border-radius:6px;border-bottom-color:transparent;
+}
+.nav-drawer-cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  margin-top:auto;
+  padding:16px 28px;border-radius:999px;
+  background:linear-gradient(90deg,#3b6df8 0%,#9b5cf6 55%,#ec4899 100%);
+  color:#fff;font-weight:800;font-size:15px;
+  box-shadow:0 16px 32px -10px rgba(155,92,246,.55), inset 0 0 0 1px rgba(255,255,255,.22);
+  transition:transform .2s, box-shadow .2s;
+}
+.nav-drawer-cta .arr{transition:transform .2s}
+.nav-drawer-cta:hover{transform:translateY(-2px);box-shadow:0 20px 38px -10px rgba(155,92,246,.65), inset 0 0 0 1px rgba(255,255,255,.3)}
+.nav-drawer-cta:hover .arr{transform:translateX(3px)}
+
 
 /* ---------- Loading Screen (page load splash, light brand style) ---------- */
 .loading-screen{
@@ -1370,3 +1460,435 @@ footer.site .contact-mail svg{width:18px;height:18px;fill:currentColor;flex:none
 .hero-right .sticker,
 .hero-right .chat-card,
 .hero-right .follower-card{pointer-events:auto}
+
+/* ============================================================
+   RESPONSIVE OVERRIDES — placed at end so they win the cascade
+   ============================================================ */
+/* ---------- Header layout for tablet/mobile: hide PC nav+cta, show hamburger ---------- */
+@media (max-width: 1199px){
+  .nav-toggle{display:inline-grid}
+  header.site nav.main{display:none}
+  header.site .cta-pill{display:none}
+}
+
+/* ---------- Hero mobile badges (hidden on PC) ---------- */
+.hero-mobile-badges{display:none}
+
+/* ---------- Tablet + mobile HERO restructure ---------- */
+@media (max-width: 1199px){
+  .hero{position:relative;padding:24px 28px 48px;min-height:0;max-width:none;overflow:hidden}
+  .hero-inner{grid-template-columns:1fr;gap:28px;position:relative;z-index:3}
+  .hero-left{padding:8px 0;position:relative;z-index:3}
+
+  /* Hide all floating HERO right decorations and the LIVE CHAT card */
+  .hero-right .pastel,
+  .hero-right .deco,
+  .hero-right .chat-card,
+  .hero-right .follower-card,
+  .hero-right .frame-ring{display:none !important}
+
+  /* HERO right becomes the background photo layer behind text */
+  .hero-right{
+    position:absolute !important;inset:0;width:auto !important;height:auto !important;
+    margin:0 !important;padding:0;
+    z-index:1;pointer-events:none;
+    display:block;overflow:hidden;
+  }
+  .hero-right .blob-wrap{
+    position:absolute !important;left:50% !important;top:50% !important;
+    transform:translate(-50%, -50%) !important;
+    width:200% !important;max-width:none !important;height:auto !important;
+    aspect-ratio:520/560;
+    margin:0 !important;
+    opacity:.16;
+    filter:saturate(.65) blur(0.5px);
+    animation:none !important;
+  }
+  /* 角丸の有機ブロブ形を無効化して画面いっぱいに矩形で表示 */
+  .hero-right .blob-wrap .blob-clipped{
+    transform:none;
+    clip-path:none !important;-webkit-clip-path:none !important;
+    border-radius:0 !important;
+  }
+  .hero-right .blob-wrap .scene{border-radius:0 !important}
+
+  /* Soft white overlay over silhouette for text readability */
+  .hero::after{
+    content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(251,250,255,.55) 0%, rgba(251,250,255,.75) 50%, transparent 100%),
+      linear-gradient(180deg, rgba(251,250,255,.4) 0%, transparent 30%, transparent 70%, rgba(251,250,255,.5) 100%);
+  }
+}
+
+/* ---------- Mobile-specific HERO (silhouette背景 + 順次出現アニメ) ---------- */
+@media (max-width: 767px){
+  .hero{padding:16px 16px 28px}
+  .hero-inner{gap:12px}
+
+  .badge-row{flex-wrap:wrap;justify-content:center;gap:5px;margin-top:6px}
+  .badge-pill{font-size:11px;padding:5px 11px}
+
+  .h1-wrap{margin-top:10px;text-align:center;position:relative}
+  /* HEROは2行で収まるサイズに */
+  .h1{
+    font-size:clamp(26px, 7.6vw, 36px) !important;
+    white-space:normal;line-height:1.2;letter-spacing:-.02em;
+    text-shadow:0 2px 16px rgba(255,255,255,.7), 0 1px 2px rgba(255,255,255,.5);
+  }
+  .h1 .mirai{
+    font-size:clamp(44px, 13vw, 62px) !important;
+    margin-left:-2px !important;margin-right:4px !important;
+    vertical-align:-2px !important;
+  }
+  .h1-line{white-space:nowrap;display:inline-block}
+
+  .pse{justify-content:center;font-size:13px;margin-top:6px;gap:6px}
+  .pse i{font-size:11px}
+
+  .lead{font-size:12px;max-width:none;text-align:center;margin-top:12px;line-height:1.75}
+
+  /* HEROチップ: 小型化 + ドットを左端で揃える */
+  .chip-grid{
+    grid-template-columns:1fr 1fr;gap:6px;margin-top:12px;
+    justify-content:center;max-width:320px;margin-left:auto;margin-right:auto;
+  }
+  .chip{
+    display:flex;justify-content:flex-start;align-items:center;
+    font-size:11px;padding:6px 10px;gap:6px;font-weight:600;
+    background:rgba(255,255,255,.94);
+  }
+  .chip .dot{width:12px;height:12px;flex:none;font-size:0}
+
+  .hero-cta-wrap{justify-content:center;margin-top:14px}
+  .hero-cta{width:100%;justify-content:center;font-size:15px;padding:14px 18px;gap:8px}
+  .hero-cta-wrap .casual{display:none}
+}
+
+/* ---------- H1 line stagger animation (mobile/tablet only, after loader) ---------- */
+@media (max-width: 1199px){
+  .h1-line{display:inline-block;opacity:0;transform:translateY(24px);filter:blur(8px)}
+  .h1-line-1{animation:h1LineIn 1.4s cubic-bezier(.2,.7,.2,1) 2.9s both}
+  .h1-line-2{animation:h1LineIn 1.6s cubic-bezier(.2,.7,.2,1) 4.0s both}
+  @keyframes h1LineIn{
+    to{opacity:1;transform:translateY(0);filter:blur(0)}
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  .h1-line{opacity:1;transform:none;filter:none;animation:none !important}
+}
+
+/* ---------- iPhone SE / 小型スマホ (<=374px) ---------- */
+@media (max-width: 374px){
+  body{padding-top:58px}
+  header.site{padding:8px 12px;gap:8px}
+  header.site.scrolled{padding:6px 12px}
+  .header-inner{gap:8px}
+  .brand{gap:8px}
+  .brand .mark{width:34px;height:34px}
+  .brand .word .name svg{height:14px}
+  .brand .word .tag{display:none}
+  .nav-toggle{width:38px;height:38px;flex:none}
+  .nav-toggle .bar{left:8px;right:8px}
+  .hero{padding:14px 14px 30px}
+  .chip-grid{max-width:none}
+  .chip{font-size:11.5px;padding:7px 10px}
+  .chip .dot{width:14px;height:14px}
+  section.block{padding:22px 12px;margin:10px 4px}
+  .sec-num{font-size:48px}
+  .sec-title{font-size:22px}
+}
+
+/* ---------- Header sizing for tablet/mobile ---------- */
+@media (max-width: 1199px){
+  body{padding-top:84px}
+  header.site{padding:14px 28px}
+  header.site.scrolled{padding:12px 28px}
+  .brand{gap:14px}
+  .brand .mark{width:56px;height:56px}
+  .brand .word .name svg{height:22px;width:auto}
+  .brand .word .tag{font-size:10px;letter-spacing:.28em}
+}
+@media (max-width: 767px){
+  body{padding-top:48px}
+  header.site{padding:6px 12px;width:100vw;box-sizing:border-box;justify-content:flex-start}
+  header.site.scrolled{padding:5px 12px}
+  .header-inner{gap:8px;max-width:100%;justify-content:flex-start}
+  /* 左寄せ: brand は固定幅、その後 margin-left:auto でハンバーガーを右に飛ばす */
+  .brand{gap:5px;min-width:0;flex:0 0 auto;margin-right:auto}
+  .brand .mark{width:24px;height:24px}
+  .brand .word{min-width:0;overflow:hidden;gap:4px !important}
+  .brand .word .name svg{height:11px;max-width:100%}
+  .brand .word .name .wordmark{font-size:10px;letter-spacing:.08em}
+  .brand .word .tag{font-size:7px;letter-spacing:.18em;gap:4px}
+  .brand .word .tag .live{padding:1px 3px;font-size:7px}
+  .nav-toggle{flex:none;width:34px;height:34px;margin-left:auto}
+  .nav-toggle .bar{left:7px;right:7px}
+  .nav-toggle .bar:nth-child(1){top:10px}
+  .nav-toggle .bar:nth-child(2){top:16px}
+  .nav-toggle .bar:nth-child(3){top:22px}
+}
+
+/* ---------- Section panels ---------- */
+@media (max-width: 1199px){
+  section.block{padding:36px 28px;margin:20px auto;border-radius:24px;max-width:none}
+  .sec-num{font-size:74px}
+  .sec-title{font-size:32px;white-space:normal}
+  .sec-eyebrow{font-size:18px}
+  .sec-lead{font-size:15px;line-height:1.75}
+  .sec-head{gap:24px}
+}
+@media (max-width: 767px){
+  section.block{padding:22px 14px;margin:10px 6px;border-radius:16px}
+  .sec-head{grid-template-columns:1fr;gap:10px}
+  /* 統一: セクション見出し基準 */
+  .sec-num{font-size:48px;margin-bottom:-12px}
+  .sec-title{font-size:22px;margin:-16px 0 4px;letter-spacing:-.01em;line-height:1.25}
+  .sec-eyebrow{font-size:13px;letter-spacing:.24em}
+  .sec-lead{font-size:12px;line-height:1.7;margin-top:6px}
+  .sec-title[class*="line-"]::after{width:96px;margin:10px 0 6px;height:2px}
+}
+
+/* ---------- SERVICE/SUPPORT/RESULTS grids ---------- */
+@media (max-width: 1199px){
+  .service-grid{grid-template-columns:repeat(2, 1fr);gap:16px;margin-top:32px}
+  .service-grid .svc-card:nth-child(odd){margin-top:0}
+  .support-grid{grid-template-columns:repeat(2, 1fr);gap:14px}
+  .results-grid{grid-template-columns:repeat(2, 1fr);gap:14px}
+}
+@media (max-width: 767px){
+  .service-grid{grid-template-columns:repeat(2,1fr);gap:8px;margin-top:18px}
+  .support-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .results-grid{grid-template-columns:repeat(2, 1fr);gap:8px}
+  /* 統一: カード見出し15px / 本文11px / ラベル9-10px */
+  .svc-card{padding:14px 12px 12px;border-radius:14px}
+  .svc-card h3{font-size:15px;margin:4px 0 4px;line-height:1.35}
+  .svc-card p{font-size:11px;line-height:1.6}
+  .svc-num{font-size:18px;top:8px;right:10px}
+  .svc-card .pill-en{font-size:9px;padding:2px 8px;letter-spacing:.12em}
+  .sup-card{border-radius:14px}
+  .sup-card .body{padding:13px 12px 12px}
+  .sup-card h4{font-size:15px;margin:4px 0 4px;line-height:1.35}
+  .sup-card p{font-size:11px;line-height:1.6}
+  .sup-card .eyebrow{font-size:10px;letter-spacing:.18em}
+  .sup-card .step-tag{font-size:9px;padding:2px 7px 1px;letter-spacing:.18em}
+  .res-card{padding:12px 10px;border-radius:12px}
+  .res-card .num{font-size:26px}
+  .res-card .unit{font-size:11px}
+  .res-card .lbl{font-size:10px}
+  .res-card .suf,.res-card .badge-suf{font-size:9px}
+  /* No.1 リボン: 主張を抑えてコンパクトに */
+  .no1{padding:14px 14px;max-width:none;border-radius:14px}
+  .no1-eyebrow{font-size:11px !important;letter-spacing:.22em;opacity:.72}
+  .no1-title{font-size:11px;line-height:1.5}
+  .no1-meta{margin-bottom:4px}
+  .no1-num{font-size:38px;line-height:1}
+  .no1-num .no{font-size:14px !important}
+  .no1-num .one{font-size:38px !important}
+  .no1-foot{font-size:9px;line-height:1.5;margin-top:4px}
+}
+
+/* ---------- FLOW timeline ---------- */
+@media (max-width: 1199px){
+  .flow-tl-item{grid-template-columns:32px 1fr 84px;gap:22px;padding:12px 4px}
+  .flow-tl-item .tl-right .ico .pill{width:64px;height:64px}
+  .flow-tl-item .tl-right .ico .pill svg{width:30px;height:30px}
+  .flow-tl-item.is-cta{grid-template-columns:32px 1fr 210px;padding:18px 22px}
+  .flow-tl-item.is-cta .tl-right .btn{font-size:16px;padding:16px 22px}
+}
+@media (max-width: 767px){
+  .flow-tl-item{grid-template-columns:18px 1fr;gap:12px;padding:10px 2px}
+  .flow-tl-item .tl-right{display:none}
+  .flow-tl-item .tl-mid .step-label{font-size:11px;letter-spacing:.18em}
+  .flow-tl-item .tl-mid h4{font-size:15px;margin:2px 0 4px}
+  .flow-tl-item .tl-mid p{font-size:11px;line-height:1.6}
+  .flow-tl-item.is-cta{grid-template-columns:18px 1fr;padding:14px 12px;border-radius:14px}
+  .flow-tl-item.is-cta .tl-right{display:flex;grid-column:1 / -1;justify-content:center;margin-top:8px}
+  .flow-tl-item.is-cta .tl-right .btn{width:100%;justify-content:center;font-size:14px;padding:12px 16px;gap:6px}
+  .flow-tl-item.is-cta .tl-right .btn .arr{font-size:15px}
+}
+
+/* ---------- FAQ ---------- */
+@media (max-width: 1199px){
+  .faq-grid{grid-template-columns:1fr;gap:24px;margin-top:24px}
+  .faq-q-glow{display:none}
+}
+@media (max-width: 767px){
+  .faq-item summary{padding:9px 12px;gap:6px}
+  .faq-item .label{font-size:12px;line-height:1.4}
+  .faq-item .q{font-size:15px !important}
+  .faq-item .answer{font-size:11px;padding:0 12px 10px;line-height:1.7}
+  .faq-item .plus{font-size:16px}
+}
+
+/* ---------- CTA banner ---------- */
+@media (max-width: 1199px){
+  .cta-banner{padding:36px 28px;border-radius:24px;margin:32px auto}
+  .cta-banner .cta-inner{flex-direction:column;text-align:center;gap:18px}
+  .cta-banner .ttl{font-size:34px;text-align:center}
+  .cta-banner .chip-row{justify-content:center;flex-wrap:wrap}
+  .cta-headset,.cta-pad{display:none}
+}
+@media (max-width: 767px){
+  /* CTAをコンパクトに：タイトル + ボタンのみ。chip-row は完全削除 */
+  .cta-banner{padding:18px 14px;border-radius:14px;margin:16px 6px}
+  .cta-banner .cta-blob-a,
+  .cta-banner .cta-blob-b,
+  .cta-banner .cta-blob-c{display:none}
+  .cta-banner .cta-inner > div{display:flex;flex-direction:column;align-items:stretch;gap:0}
+  .cta-banner .ttl{order:1;font-size:18px;line-height:1.3;text-align:center}
+  .cta-banner .big-btn{
+    order:2;width:100%;padding:13px 16px;font-size:14px;line-height:1.3;
+    margin-top:12px;gap:6px;
+  }
+  .cta-banner .big-btn small{font-size:9px;margin-top:2px}
+  .cta-banner .chip-row{display:none}
+}
+
+/* ---------- Footer: ロゴ/名前/リンクは左寄せ、CONTACTは右側 ---------- */
+@media (max-width: 1199px){
+  footer.site{padding:32px 24px 36px;margin-top:32px}
+  .footer-inner{
+    grid-template-columns:1fr auto;grid-template-rows:auto auto;
+    gap:18px 16px;text-align:left;align-items:start;
+  }
+  footer.site .logo{
+    grid-column:1;grid-row:1;justify-content:flex-start;
+  }
+  footer.site .contact{
+    grid-column:2;grid-row:1;align-items:flex-end;
+  }
+  footer.site .links{
+    grid-column:1 / -1;grid-row:2;
+    grid-template-columns:repeat(3, max-content);gap:10px 28px;
+    justify-content:start;justify-items:start;font-size:13px;
+  }
+  footer.site .links a{text-align:left}
+  footer.site .logo .word .name svg{height:20px}
+  footer.site .logo .word .tag{font-size:9px;letter-spacing:.28em}
+  .contact-label{font-size:12px;letter-spacing:.28em}
+  .contact-mail{padding:10px 16px;font-size:12.5px}
+}
+@media (max-width: 767px){
+  footer.site{padding:22px 14px 24px}
+  /* モバイルではCONTACTが右にあった行が見切れるので、縦3段に組み替え：ロゴ→リンク→CONTACT(右寄せ) */
+  .footer-inner{
+    grid-template-columns:1fr !important;grid-template-rows:auto auto auto !important;
+    gap:14px !important;
+  }
+  footer.site .logo{grid-column:1 !important;grid-row:1 !important;justify-content:flex-start;gap:8px}
+  footer.site .logo .mark{width:32px;height:32px}
+  footer.site .logo .word .name svg{height:13px}
+  footer.site .logo .word .tag{font-size:7px;letter-spacing:.22em}
+  footer.site .links{
+    grid-column:1 !important;grid-row:2 !important;
+    grid-template-columns:1fr 1fr !important;gap:6px 16px;font-size:11px;
+    justify-content:start;justify-items:start;
+  }
+  footer.site .contact{
+    grid-column:1 !important;grid-row:3 !important;
+    align-items:flex-end;width:100%;
+  }
+  .contact-label{font-size:8px;letter-spacing:.22em;padding-bottom:3px}
+  .contact-label::after{width:26px;height:2px}
+  .contact-mail{padding:6px 11px;font-size:10px;gap:4px}
+  .contact-mail svg{width:11px;height:11px}
+}
+
+/* ---------- Decorations: sec-sparkles + bg-shapes ---------- */
+@media (max-width: 1199px){
+  .sec-sparkles .sparkle{transform:scale(.7)}
+  .bg-shape{transform:scale(.7)}
+}
+@media (max-width: 767px){
+  .sec-sparkles{display:none}
+  /* Keep ~12 of the 23 bg-shapes on mobile, scale them down */
+  .bg-shape{transform:scale(.5)}
+  .bg-shapes .bg-shape:nth-child(n+13){display:none}
+}
+
+/* ---------- company.html specific ---------- */
+@media (max-width: 1199px){
+  .page-hero{padding:28px 24px 24px;max-width:none}
+  .page-hero h1{font-size:34px}
+  .page-hero .eyebrow{font-size:13px;letter-spacing:.32em}
+  .page-hero .sub{font-size:14px;line-height:1.8;margin-top:14px}
+  .message-wrap{grid-template-columns:1fr;gap:20px}
+  .message-card{padding:24px 20px}
+  .message-card h3{font-size:20px}
+  .message-side{order:-1;max-width:280px;margin:0 auto}
+  .vmv-grid{grid-template-columns:1fr;gap:14px}
+  .info-card .info-row{grid-template-columns:120px 1fr;font-size:13px;padding:12px 14px}
+  .access-grid{grid-template-columns:1fr;gap:14px}
+  .timeline{padding-left:38px}
+  .sp-only{display:none}
+}
+/* スマホでは大幅にコンパクト化 + index.htmlのスマホ統一基準と揃える */
+@media (max-width: 767px){
+  /* SP専用改行 (CTA h2 等) を有効化 */
+  .sp-only{display:inline}
+
+  /* PAGE HERO */
+  .page-hero{padding:16px 14px 14px}
+  .page-hero h1{font-size:19px;line-height:1.3}
+  .page-hero h1 .accent{display:inline-block}
+  .page-hero .eyebrow{font-size:11px;letter-spacing:.26em}
+  .page-hero .sub{font-size:11px;line-height:1.7;margin-top:10px;max-width:none}
+  .breadcrumb{font-size:10px;margin-bottom:8px;gap:6px}
+
+  /* MESSAGE */
+  .message-wrap{gap:14px}
+  .message-card{padding:16px 14px;border-radius:14px}
+  .message-card h3{font-size:15px;line-height:1.45;margin:0 0 12px}
+  .message-card p{font-size:11px;line-height:1.7;margin:0 0 8px}
+  .message-card .quote{font-size:40px;top:14px;right:18px}
+  .message-wrap.solo .message-card .quote{font-size:60px;top:18px;right:18px}
+  .message-card .sign{margin-top:14px;gap:10px}
+  .message-card .sign .av{width:34px;height:34px}
+  .message-card .sign .sign-mark{width:34px;height:34px}
+  .message-card .sign .who .role{font-size:9px;letter-spacing:.04em}
+  .message-card .sign .who .name{font-size:13px}
+  .message-card .sign .who .en{font-size:9px}
+
+  /* VMV cards */
+  .vmv-grid{gap:10px}
+  .vmv-card{padding:14px 14px;border-radius:14px}
+  .vmv-card h3{font-size:15px;line-height:1.4;margin:6px 0 6px}
+  .vmv-card p{font-size:11px;line-height:1.6}
+  .vmv-card .num{font-size:24px}
+  .vmv-card .icon{font-size:16px}
+  .vmv-card .lbl{font-size:9px;letter-spacing:.2em}
+
+  /* INFO card */
+  .info-card{border-radius:14px}
+  .info-card .info-row{grid-template-columns:1fr;gap:2px;padding:10px 12px}
+  .info-card .info-row dt{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.08em}
+  .info-card .info-row dd{font-size:12px;line-height:1.55}
+  .info-card .info-row dd .small{font-size:10px}
+  .info-card .info-row dd .biz{gap:6px}
+  .info-card .info-row dd .biz span{font-size:11px;padding:3px 8px}
+
+  /* TIMELINE */
+  .timeline{padding-left:24px;margin-top:18px}
+  .timeline::before{left:8px}
+  .tl-item{padding-bottom:14px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item .dot{left:-22px;top:2px;width:14px;height:14px}
+  .tl-item .dot::before{width:7px;height:7px}
+  .tl-item .year{font-size:16px;letter-spacing:.04em}
+  .tl-item .year small{font-size:11px;margin-left:4px}
+  .tl-item h4{font-size:13px;font-weight:800;margin:4px 0 3px;line-height:1.4}
+  .tl-item p{font-size:11px;line-height:1.65;max-width:none}
+
+  /* ACCESS */
+  .access-grid{gap:10px}
+  .access-card{padding:14px 14px;border-radius:14px}
+  .access-card h3{font-size:14px;margin:0 0 8px}
+  .access-card p,.access-card dl,.access-card dd,.access-card dt{font-size:11px;line-height:1.65}
+
+  /* CTA「あなたも Cloud Liver で。」セクション */
+  .cta-banner.center{padding:18px 14px;border-radius:14px;margin:18px 6px}
+  .cta-banner.center h2{font-size:18px;line-height:1.35}
+  .cta-banner.center p{font-size:11px;line-height:1.65;margin:8px 0 14px}
+  .cta-banner.center .btn{font-size:13px;padding:11px 26px;gap:6px}
+}

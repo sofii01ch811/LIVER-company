@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=1280" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cloud Liver — 配信で、未来を変えよう。</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -109,8 +109,26 @@
     <a href="company.html">会社概要</a>
   </nav>
   <button class="cta-pill">今すぐ無料で相談する<span class="arr">→</span></button>
+  <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="navDrawer"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
   </div>
 </header>
+
+<div class="nav-drawer" id="navDrawer" aria-hidden="true">
+  <div class="nav-drawer-backdrop" data-nav-close></div>
+  <aside class="nav-drawer-panel" role="dialog" aria-label="メニュー">
+    <button class="nav-drawer-close" type="button" aria-label="メニューを閉じる" data-nav-close>×</button>
+    <div class="nav-drawer-brand">CLOUD LIVER</div>
+    <nav class="nav-drawer-nav">
+      <a href="#service">サービス</a>
+      <a href="#support">サポート内容</a>
+      <a href="#results">実績</a>
+      <a href="#flow">サポートの流れ</a>
+      <a href="#faq">FAQ</a>
+      <a href="company.html">会社概要</a>
+    </nav>
+    <a class="nav-drawer-cta" href="#cta">今すぐ無料で相談する<span class="arr">→</span></a>
+  </aside>
+</div>
 
 <!-- ====================== HERO ====================== -->
 <section class="hero">
@@ -138,8 +156,8 @@
 
       <div class="h1-wrap fade-in delay-1">
         <h1 class="h1">
-          配信で、<br/>
-          <span class="mirai">未来</span>を変えよう。
+          <span class="h1-line h1-line-1">配信で、</span><br/>
+          <span class="h1-line h1-line-2"><span class="mirai">未来</span>を変えよう。</span>
         </h1>
       </div>
 
