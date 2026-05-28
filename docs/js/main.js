@@ -10,6 +10,39 @@
     onScroll();
   }
 
+  // hamburger nav drawer
+  const navToggle = document.getElementById('navToggle');
+  const navDrawer = document.getElementById('navDrawer');
+  if (navToggle && navDrawer) {
+    const openDrawer = () => {
+      navDrawer.classList.add('is-open');
+      navDrawer.setAttribute('aria-hidden', 'false');
+      navToggle.setAttribute('aria-expanded', 'true');
+      navToggle.setAttribute('aria-label', 'メニューを閉じる');
+      document.body.classList.add('nav-locked');
+    };
+    const closeDrawer = () => {
+      navDrawer.classList.remove('is-open');
+      navDrawer.setAttribute('aria-hidden', 'true');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'メニューを開く');
+      document.body.classList.remove('nav-locked');
+    };
+    navToggle.addEventListener('click', () => {
+      if (navDrawer.classList.contains('is-open')) closeDrawer();
+      else openDrawer();
+    });
+    navDrawer.querySelectorAll('[data-nav-close]').forEach(el => {
+      el.addEventListener('click', closeDrawer);
+    });
+    navDrawer.querySelectorAll('.nav-drawer-nav a, .nav-drawer-cta').forEach(a => {
+      a.addEventListener('click', closeDrawer);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navDrawer.classList.contains('is-open')) closeDrawer();
+    });
+  }
+
   // voices carousel (LP only — elements absent on company.html)
   const track = document.getElementById('voicesTrack');
   const dotsWrap = document.getElementById('voicesDots');
