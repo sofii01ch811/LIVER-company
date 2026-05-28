@@ -291,7 +291,7 @@ section.block{
 .h1-wrap{margin-top:14px;position:relative}
 .h1{font-size:58px;line-height:1.05;font-weight:900;letter-spacing:-.02em;color:#0c0f2c;white-space:nowrap}
 .h1 .mirai{
-  font-size:72px;font-weight:900;line-height:.9;display:inline-block;vertical-align:-6px;letter-spacing:-.02em;
+  font-size:64px;font-weight:900;line-height:.9;display:inline-block;vertical-align:-6px;letter-spacing:-.02em;
   font-style:italic;
   background:linear-gradient(180deg,#9b5cf6 0%,#c084fc 50%,#ec4899 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
