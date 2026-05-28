@@ -6,10 +6,34 @@
 <title>会社概要 — Cloud Liver</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Bebas+Neue&family=Orbitron:wght@600;700;800;900&family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Bebas+Neue&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+
+<!-- Loading Screen (neon brand splash) -->
+<div class="loading-screen" id="loadingScreen" aria-hidden="true">
+  <div class="loading-screen__inner">
+    <div class="loading-screen__logo">
+      <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="loadHex" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#3b6df8"/>
+            <stop offset="50%" stop-color="#9b5cf6"/>
+            <stop offset="100%" stop-color="#ec4899"/>
+          </linearGradient>
+        </defs>
+        <path d="M 22 2 L 40 12 L 40 32 L 22 42 L 4 32 L 4 12 Z" fill="url(#loadHex)"/>
+        <path d="M 22 6 L 36 14 L 36 30 L 22 38 L 8 30 L 8 14 Z" fill="rgba(15,8,30,.95)"/>
+        <path d="M 14 22 Q 14 13 23 13 Q 30 13 32 18" fill="none" stroke="url(#loadHex)" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M 14 22 Q 14 31 23 31 Q 30 31 32 26" fill="none" stroke="url(#loadHex)" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M 20 18 L 20 26 L 28 22 Z" fill="#fff"/>
+      </svg>
+      <div class="loading-screen__brand">CLOUD LIVER</div>
+    </div>
+    <div class="loading-screen__bar"><div class="loading-screen__bar-fill"></div></div>
+  </div>
+</div>
 
 <div class="bg-layer" aria-hidden="true">
   <div class="orb o1"></div>
@@ -102,11 +126,16 @@
   <div class="sec-head fade-in">
     <div>
       <div class="sec-num">01</div>
-      <h2 class="sec-title">代表メッセージ</h2>
+      <h2 class="sec-title line-blue">代表メッセージ</h2>
       <div class="sec-eyebrow">MESSAGE</div>
       <p class="sec-lead">配信という新しい働き方を、<br/>当たり前にしたい。</p>
     </div>
-    <div></div>
+    <div class="sec-sparkles" aria-hidden="true">
+      <svg class="sparkle sp1" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp2" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp3" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp4" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+    </div>
   </div>
 
   <div class="message-wrap solo">
@@ -166,11 +195,16 @@
   <div class="sec-head fade-in" style="position:relative;z-index:1">
     <div>
       <div class="sec-num">02</div>
-      <h2 class="sec-title">ビジョン<span style="color:#cfd2e9;font-weight:700;margin:0 10px">・</span>ミッション<span style="color:#cfd2e9;font-weight:700;margin:0 10px">・</span>バリュー</h2>
+      <h2 class="sec-title line-purple">ビジョン<span style="color:#cfd2e9;font-weight:700;margin:0 10px">・</span>ミッション<span style="color:#cfd2e9;font-weight:700;margin:0 10px">・</span>バリュー</h2>
       <div class="sec-eyebrow">VISION / MISSION / VALUE</div>
       <p class="sec-lead">私たちが見ている景色、<br/>果たす役割、大切にする姿勢。</p>
     </div>
-    <div></div>
+    <div class="sec-sparkles" aria-hidden="true">
+      <svg class="sparkle sp1" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp2" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp3" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp4" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+    </div>
   </div>
 
   <div class="vmv-grid">
@@ -228,11 +262,16 @@
   <div class="sec-head fade-in">
     <div>
       <div class="sec-num">03</div>
-      <h2 class="sec-title">会社情報</h2>
+      <h2 class="sec-title line-pink">会社情報</h2>
       <div class="sec-eyebrow">CORPORATE</div>
       <p class="sec-lead">基本情報・事業内容・<br/>所属メンバーについて。</p>
     </div>
-    <div></div>
+    <div class="sec-sparkles" aria-hidden="true">
+      <svg class="sparkle sp1" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp2" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp3" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp4" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+    </div>
   </div>
 
   <dl class="info-card fade-in delay-2">
@@ -263,11 +302,16 @@
   <div class="sec-head fade-in">
     <div>
       <div class="sec-num">04</div>
-      <h2 class="sec-title">沿革</h2>
+      <h2 class="sec-title line-orange">沿革</h2>
       <div class="sec-eyebrow">HISTORY</div>
       <p class="sec-lead">小さな配信スタジオから、<br/>1,200名のライバーと共に。</p>
     </div>
-    <div></div>
+    <div class="sec-sparkles" aria-hidden="true">
+      <svg class="sparkle sp1" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp2" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp3" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp4" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+    </div>
   </div>
 
   <div class="timeline fade-in delay-2">
@@ -315,11 +359,16 @@
   <div class="sec-head fade-in">
     <div>
       <div class="sec-num">05</div>
-      <h2 class="sec-title">アクセス</h2>
+      <h2 class="sec-title line-green">アクセス</h2>
       <div class="sec-eyebrow">ACCESS</div>
       <p class="sec-lead">渋谷・神宮前エリアの<br/>配信スタジオ併設オフィス。</p>
     </div>
-    <div></div>
+    <div class="sec-sparkles" aria-hidden="true">
+      <svg class="sparkle sp1" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp2" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp3" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+      <svg class="sparkle sp4" viewBox="0 0 24 24"><path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"/></svg>
+    </div>
   </div>
 
   <div class="access-grid fade-in delay-2">
