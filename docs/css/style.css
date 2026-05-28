@@ -956,22 +956,26 @@ footer.site .logo img{height:40px}
 footer.site .links{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 20px;font-size:14px;color:rgba(255,255,255,.78)}
 footer.site .links a{font-weight:600;transition:color .2s}
 footer.site .links a:hover{color:#00e5ff}
-footer.site .socials{display:flex;gap:14px;justify-content:flex-end}
-footer.site .socials a{
-  flex:none;width:54px;height:54px;border-radius:50%;
-  background:rgba(255,255,255,.92);color:#0c0f24;display:grid;place-items:center;
-  transition:transform .2s, background .2s;
+footer.site .contact{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+footer.site .contact-label{
+  font-family:"Bebas Neue",sans-serif;font-size:14px;letter-spacing:.3em;
+  color:rgba(255,255,255,.55);
 }
-footer.site .socials a:hover{transform:translateY(-2px)}
-footer.site .socials a.x:hover{background:#000}
-footer.site .socials a.x:hover svg{fill:#fff}
-footer.site .socials a.yt:hover{background:#ff0000}
-footer.site .socials a.yt:hover svg{fill:#fff}
-footer.site .socials a.ig:hover{background:linear-gradient(135deg,#f58529 0%,#dd2a7b 50%,#8134af 100%)}
-footer.site .socials a.ig:hover svg{fill:#fff}
-footer.site .socials a.tt:hover{background:#000}
-footer.site .socials a.tt:hover svg{fill:#fff}
-footer.site .socials svg{width:24px;height:24px;fill:#0c0f24;transition:fill .2s}
+footer.site .contact-mail{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:14px 22px;border-radius:999px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+  color:#fff;font-weight:600;font-size:14px;letter-spacing:.01em;
+  transition:background .2s, border-color .2s, color .2s, transform .2s;
+}
+footer.site .contact-mail:hover{
+  background:rgba(0,229,255,.12);
+  border-color:rgba(0,229,255,.5);
+  color:#00e5ff;
+  transform:translateY(-2px);
+}
+footer.site .contact-mail svg{width:18px;height:18px;fill:currentColor;flex:none}
 
 /* ---------- company.html page hero ---------- */
 .page-hero{position:relative;max-width:1280px;margin:0 auto;padding:56px 52px 44px;overflow:hidden}
