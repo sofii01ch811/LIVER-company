@@ -119,6 +119,9 @@ body.nav-locked{overflow:hidden}
 .nav-drawer-cta .arr{transition:transform .2s}
 .nav-drawer-cta:hover{transform:translateY(-2px);box-shadow:0 20px 38px -10px rgba(155,92,246,.65), inset 0 0 0 1px rgba(255,255,255,.3)}
 .nav-drawer-cta:hover .arr{transform:translateX(3px)}
+.nav-drawer-cta-wrap{display:flex;flex-direction:column;align-items:stretch;margin-top:auto}
+.nav-drawer-cta-wrap .nav-drawer-cta{margin-top:0}
+.nav-drawer-cta-wrap .line-note{text-align:center;margin-top:10px}
 
 
 /* ---------- Loading Screen (page load splash, light brand style) ---------- */
@@ -1113,6 +1116,13 @@ section.block{
 .cta-banner.center .btn .arr{transition:transform .2s}
 .cta-banner.center .btn:hover .arr{transform:translateX(3px)}
 
+/* 公式LINE接続の控えめな注釈（あくまで気持ち程度に目立たせない） */
+.line-note{display:block;font-size:10px;line-height:1.45;font-weight:500;letter-spacing:.02em;color:#8a90ab;opacity:.75;margin-top:8px;white-space:normal}
+.line-note.on-dark{color:rgba(255,255,255,.72);opacity:1}
+.hero-cta-wrap{flex-wrap:wrap}
+.hero-cta-wrap .line-note{flex:0 0 100%;margin-top:0}
+.cta-inner .line-note{text-align:center;margin-top:10px}
+
 /* ---------- footer ---------- */
 footer.site{
   max-width:none;padding:44px 48px 50px;margin:48px 0 0;
@@ -1131,7 +1141,7 @@ footer.site::before{
 .footer-inner{
   position:relative;z-index:1;
   max-width:1280px;margin:0 auto;
-  display:grid;grid-template-columns:240px 1fr 300px;gap:32px;align-items:start;
+  display:grid;grid-template-columns:240px 1fr;gap:32px;align-items:center;
 }
 footer.site .logo{display:flex;align-items:center;gap:14px}
 footer.site .logo .mark{position:relative;width:48px;height:48px}
@@ -1563,6 +1573,7 @@ footer.site .contact-mail svg{width:18px;height:18px;fill:currentColor;flex:none
   .hero-cta-wrap{justify-content:center;margin-top:14px}
   .hero-cta{width:100%;justify-content:center;font-size:15px;padding:14px 18px;gap:8px}
   .hero-cta-wrap .casual{display:none}
+  .hero-cta-wrap .line-note{text-align:center}
 }
 
 /* ---------- H1 line stagger animation (mobile/tablet only, after loader) ---------- */
@@ -1742,6 +1753,7 @@ footer.site .contact-mail svg{width:18px;height:18px;fill:currentColor;flex:none
     margin-top:12px;gap:6px;
   }
   .cta-banner .big-btn small{font-size:9px;margin-top:2px}
+  .cta-banner .line-note{order:3;text-align:center;margin-top:10px}
   .cta-banner .chip-row{display:none}
 }
 
@@ -1823,6 +1835,12 @@ footer.site .contact-mail svg{width:18px;height:18px;fill:currentColor;flex:none
   .timeline{padding-left:38px}
   .sp-only{display:none}
 }
+/* 本文の装飾改行はタブレット/スマホでは無効化し、自然な折り返しに（PC用の細かい<br>がブツ切れに見えるのを防ぐ） */
+@media (max-width: 1199px){
+  .page-hero .sub br,
+  .message-card p br,
+  .vmv-card p br{display:none}
+}
 /* スマホでは大幅にコンパクト化 + index.htmlのスマホ統一基準と揃える */
 @media (max-width: 767px){
   /* SP専用改行 (CTA h2 等) を有効化 */
@@ -1840,7 +1858,7 @@ footer.site .contact-mail svg{width:18px;height:18px;fill:currentColor;flex:none
   .message-wrap{gap:14px}
   .message-card{padding:16px 14px;border-radius:14px}
   .message-card h3{font-size:15px;line-height:1.45;margin:0 0 12px}
-  .message-card p{font-size:11px;line-height:1.7;margin:0 0 8px}
+  .message-card p{font-size:12px;line-height:1.85;margin:0 0 10px}
   .message-card .quote{font-size:40px;top:14px;right:18px}
   .message-wrap.solo .message-card .quote{font-size:60px;top:18px;right:18px}
   .message-card .sign{margin-top:14px;gap:10px}
@@ -1854,7 +1872,7 @@ footer.site .contact-mail svg{width:18px;height:18px;fill:currentColor;flex:none
   .vmv-grid{gap:10px}
   .vmv-card{padding:14px 14px;border-radius:14px}
   .vmv-card h3{font-size:15px;line-height:1.4;margin:6px 0 6px}
-  .vmv-card p{font-size:11px;line-height:1.6}
+  .vmv-card p{font-size:12px;line-height:1.75}
   .vmv-card .num{font-size:24px}
   .vmv-card .icon{font-size:16px}
   .vmv-card .lbl{font-size:9px;letter-spacing:.2em}
@@ -1863,7 +1881,7 @@ footer.site .contact-mail svg{width:18px;height:18px;fill:currentColor;flex:none
   .info-card{border-radius:14px}
   .info-card .info-row{grid-template-columns:1fr;gap:2px;padding:10px 12px}
   .info-card .info-row dt{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.08em}
-  .info-card .info-row dd{font-size:12px;line-height:1.55}
+  .info-card .info-row dd{font-size:12.5px;line-height:1.6}
   .info-card .info-row dd .small{font-size:10px}
   .info-card .info-row dd .biz{gap:6px}
   .info-card .info-row dd .biz span{font-size:11px;padding:3px 8px}
